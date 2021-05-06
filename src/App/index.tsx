@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { v1 as uuid } from "uuid";
 import { Todo } from "../type";
 import "./App.css";
@@ -13,18 +7,18 @@ const todos: Todo[] = [
   {
     id: uuid(),
     desc: "Learn React",
-    isComplete: true
+    isComplete: true,
   },
   {
     id: uuid(),
     desc: "Learn Redux",
-    isComplete: true
+    isComplete: true,
   },
   {
     id: uuid(),
     desc: "Learn Redux-ToolKit",
-    isComplete: false
-  }
+    isComplete: false,
+  },
 ];
 
 const selectedTodoId = todos[1].id;
@@ -36,8 +30,7 @@ const App = function() {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const editInput = useRef<HTMLInputElement>(null);
 
-  const selectedTodo =
-    (selectedTodoId && todos.find(todo => todo.id === selectedTodoId)) || null;
+  const selectedTodo = (selectedTodoId && todos.find(({ id }) => id === selectedTodoId)) || null;
 
   const handleNewInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodoInput(e.target.value);
@@ -70,9 +63,7 @@ const App = function() {
     e.preventDefault();
   };
 
-  const handleCancelUpdate = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
+  const handleCancelUpdate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     e.preventDefault();
     setIsEditMode(false);
     setEditTodoInput("");
@@ -93,11 +84,7 @@ const App = function() {
         <h1>Todo: Redux vs RTK Edition</h1>
         <form onSubmit={handleCreateNewTodo}>
           <label htmlFor="new-todo">Add new:</label>
-          <input
-            onChange={handleNewInputChange}
-            id="new-todo"
-            value={newTodoInput}
-          />
+          <input onChange={handleNewInputChange} id="new-todo" value={newTodoInput} />
           <button type="submit">Create</button>
         </form>
       </div>
@@ -122,11 +109,7 @@ const App = function() {
             <span className="empty-state">No Todo Selected</span>
           ) : !isEditMode ? (
             <>
-              <span
-                className={`todo-desc ${
-                  selectedTodo?.isComplete ? "done" : ""
-                }`}
-              >
+              <span className={`todo-desc ${selectedTodo?.isComplete ? "done" : ""}`}>
                 {selectedTodo.desc}
               </span>
               <div className="todo-actions">
@@ -138,11 +121,7 @@ const App = function() {
           ) : (
             <form onSubmit={handleUpdate}>
               <label htmlFor="edit-todo">Edit:</label>
-              <input
-                ref={editInput}
-                onChange={handleEditInputChange}
-                value={editTodoInput}
-              />
+              <input ref={editInput} onChange={handleEditInputChange} value={editTodoInput} />
               <button type="submit">Update</button>
               <button onClick={handleCancelUpdate}>Cancel</button>
             </form>

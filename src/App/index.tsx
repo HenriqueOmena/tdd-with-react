@@ -3,24 +3,6 @@ import { v1 as uuid } from "uuid";
 import { Todo } from "../type";
 import "./App.css";
 
-const todos: Todo[] = [
-  {
-    id: uuid(),
-    desc: "Learn React",
-    isComplete: true,
-  },
-  {
-    id: uuid(),
-    desc: "Learn Redux",
-    isComplete: true,
-  },
-  {
-    id: uuid(),
-    desc: "Learn Redux-ToolKit",
-    isComplete: false,
-  },
-];
-
 const selectedTodoId = todos[1].id;
 const editedCount = 0;
 

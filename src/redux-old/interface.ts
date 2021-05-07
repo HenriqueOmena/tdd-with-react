@@ -36,3 +36,9 @@ export interface SelectTodoActionType {
   type: typeof SELECT_TODO;
   payload: { id: string };
 }
+
+export type TodoActionsTypes =
+  | CreateTodoActionType
+  | EditTodoActionTYpe
+  | ToggleActionType
+  | DeleteTodoActionType;

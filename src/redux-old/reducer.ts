@@ -42,10 +42,9 @@ const todosReducer = (state: Todo[] = todosInitialState, action: TodoActionsType
     case DELETE_TODO: {
       return state.filter((todo) => todo.id !== action.payload.id);
     }
-    default:
-      return {
-        state,
-      };
+    default: {
+      return state;
+    }
   }
 };
 

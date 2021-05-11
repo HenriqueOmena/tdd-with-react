@@ -1,19 +1,21 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { v1 as uuid } from "uuid";
-import { Todo } from "../type";
+import { useDispatch, useSelector } from "react-redux";
+import { createTodoActionCreator, selectTodoActionCreator } from "../redux-old";
+import { State } from "../redux-old/interface";
 import "./App.css";
 
-const selectedTodoId = todos[1].id;
-const editedCount = 0;
-
 const App = function() {
+  const dispatch = useDispatch();
+  const todos = useSelector((state: State) => state.todos);
   const [newTodoInput, setNewTodoInput] = useState<string>("");
   const [editTodoInput, setEditTodoInput] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const editInput = useRef<HTMLInputElement>(null);
+  const selectedTodoId = useSelector((state: State) => state.selectedTodo);
 
-  const selectedTodo = (selectedTodoId && todos.find(({ id }) => id === selectedTodoId)) || null;
-
+  const selectedTodo = (selectedTodoId && todos.find((todo) => todo.id === selectedTodoId)) || null;
+  const editedCount = useSelector((state: State) => state.counter);
+  console.log("fuuu", todos);
   const handleNewInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodoInput(e.target.value);
   };
@@ -24,9 +26,14 @@ const App = function() {
 
   const handleCreateNewTodo = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    if (!newTodoInput.length) return;
+    dispatch(createTodoActionCreator({ desc: newTodoInput }));
+    setNewTodoInput("");
   };
 
-  const handleSelectTodo = (todoId: string) => (): void => {};
+  const handleSelectTodo = (todoId: string) => (): void => {
+    dispatch(selectTodoActionCreator({ id: todoId }));
+  };
 
   const handleEdit = (): void => {
     if (!selectedTodo) return;

@@ -28,7 +28,7 @@ export const editTodoActionCreator = ({
   },
 });
 
-export const toogleTodoActionCreator = ({ id, isComplete }: ToggleActionType["payload"]) => ({
+export const toggleTodoActionCreator = ({ id, isComplete }: ToggleActionType["payload"]) => ({
   type: TOGGLE_TODO,
   payload: { id, isComplete },
 });

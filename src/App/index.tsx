@@ -1,6 +1,12 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTodoActionCreator, selectTodoActionCreator } from "../redux-old";
+import {
+  createTodoActionCreator,
+  deleteTodoActionCreator,
+  editTodoActionCreator,
+  selectTodoActionCreator,
+  toggleTodoActionCreator,
+} from "../redux-old";
 import { State } from "../redux-old/interface";
 import "./App.css";
 
@@ -15,7 +21,6 @@ const App = function() {
 
   const selectedTodo = (selectedTodoId && todos.find((todo) => todo.id === selectedTodoId)) || null;
   const editedCount = useSelector((state: State) => state.counter);
-  console.log("fuuu", todos);
   const handleNewInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodoInput(e.target.value);
   };
@@ -50,20 +55,33 @@ const App = function() {
 
   const handleUpdate = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+
+    if (!editTodoInput.length || !selectedTodoId) {
+      handleCancelUpdate();
+      return;
+    }
+
+    dispatch(editTodoActionCreator({ id: selectedTodoId, desc: editTodoInput }));
+    setIsEditMode(false);
+    setEditTodoInput("");
   };
 
-  const handleCancelUpdate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    e.preventDefault();
+  const handleCancelUpdate = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    e?.preventDefault();
     setIsEditMode(false);
     setEditTodoInput("");
   };
 
   const handleToggle = (): void => {
     if (!selectedTodoId || !selectedTodo) return;
+
+    dispatch(toggleTodoActionCreator({ id: selectedTodoId, isComplete: !selectedTodo.isComplete }));
   };
 
   const handleDelete = (): void => {
     if (!selectedTodoId) return;
+
+    dispatch(deleteTodoActionCreator({ id: selectedTodoId }));
   };
 
   return (

@@ -6,7 +6,7 @@ import {
   editTodoActionCreator,
   selectTodoActionCreator,
   toggleTodoActionCreator,
-} from "../redux-old";
+} from "../redux-toolkit";
 import { State } from "../redux-old/interface";
 import "./App.css";
 

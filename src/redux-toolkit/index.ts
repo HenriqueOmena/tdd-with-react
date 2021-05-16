@@ -1,11 +1,5 @@
-import {
-  combineReducers,
-  configureStore,
-  createSlice,
-  getDefaultMiddleware,
-  PayloadAction,
-} from "@reduxjs/toolkit";
-import uuid from "uuid";
+import { configureStore, createSlice, getDefaultMiddleware, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuid } from "uuid";
 import { Todo } from "../redux-old/interface";
 
 const todosInitialState: Todo[] = [
@@ -87,14 +81,14 @@ export const {
 } = todosSlice.actions;
 export const { select: selectTodoActionCreator } = selectedTodoSlice.actions;
 
-const reducer = combineReducers({
+const reducer = {
   todos: todosSlice.reducer,
   selectedTodo: selectedTodoSlice.reducer,
   counter: counterSlice.reducer,
-});
+};
 
-const middleware = [...getDefaultMiddleware(), logger];
+// const middleware = [...getDefaultMiddleware(), logger];
 export default configureStore({
   reducer,
-  middleware,
+  // middleware,
 });

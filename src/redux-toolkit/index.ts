@@ -1,6 +1,7 @@
 import { configureStore, createSlice, getDefaultMiddleware, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 import { Todo } from "../redux-old/interface";
+import logger from "redux-logger";
 
 const todosInitialState: Todo[] = [
   {
@@ -87,8 +88,8 @@ const reducer = {
   counter: counterSlice.reducer,
 };
 
-// const middleware = [...getDefaultMiddleware(), logger];
+const middleware = [...getDefaultMiddleware(), logger];
 export default configureStore({
   reducer,
-  // middleware,
+  middleware,
 });
